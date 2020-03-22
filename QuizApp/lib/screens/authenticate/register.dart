@@ -32,7 +32,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue[300],
+        backgroundColor: Colors.blue[400],
         elevation: 0.0,
         title: Text('Sign up to Quiz App'),
         actions: <Widget>[
@@ -57,7 +57,6 @@ class _RegisterState extends State<Register> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 50),
-              
                 SizedBox(height: 20),
                 TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Email'),
@@ -102,7 +101,10 @@ class _RegisterState extends State<Register> {
                 SizedBox(height: 12.0),
                 Text(
                   error,
-                  style: TextStyle(color: Colors.red, fontSize: 18),
+                  style: TextStyle(
+                      color: Colors.red[400],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
                 )
               ],
             )),

@@ -1,6 +1,5 @@
 import 'package:QuizApp/screens/authenticate/register.dart';
 import 'package:flutter/material.dart';
-import 'package:QuizApp/screens/authenticate/register.dart';
 import './sign_in.dart';
 
 class Authenticate extends StatefulWidget {
@@ -10,15 +9,16 @@ class Authenticate extends StatefulWidget {
 
 class _AuthenticateState extends State<Authenticate> {
   bool showSignIn = true;
-  void toggleView(){
+  void toggleView() {
     setState(() => showSignIn = !showSignIn);
   }
+
   @override
   Widget build(BuildContext context) {
-    if(showSignIn){
-      return SignIn(toggleView:toggleView);
-    }else{
-      return Register(toggleView:toggleView);
+    if (showSignIn) {
+      return SignIn(toggleView: toggleView);
+    } else {
+      return Register(toggleView: toggleView);
+    }
   }
-}
 }
