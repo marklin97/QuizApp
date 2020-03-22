@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class Module extends StatefulWidget {
   final IconData icon;
   final String module_name;
-  final String total_quiz;
+  final int total_quiz;
   final String level;
   Module({this.module_name, this.total_quiz, this.level, this.icon});
   @override
@@ -37,7 +37,7 @@ class _ModuleState extends State<Module> {
                 ),
                 SizedBox(height: 15),
                 Text(
-                  widget.total_quiz,
+                  'Total questions : ${widget.total_quiz}',
                   style: TextStyle(
                     fontSize: 18,
                   ),

@@ -10,8 +10,6 @@ var questionNumber = 0;
 var quiz = new AnimalQuiz();
 
 class AnimalQuiz {
-  var images = ["alligator", "cat", "dog", "owl"];
-
   var questions = [
     "This animal is a carnivorous reptile.",
     "_________ like to chase mice and birds.",

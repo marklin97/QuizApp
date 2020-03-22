@@ -5,7 +5,7 @@ enum ConfirmAction { CANCEL, ACCEPT }
 
 class Confirm extends StatefulWidget {
   final String module_name;
-  final String total_quiz;
+  final int total_quiz;
   final String level;
   Confirm({this.module_name, this.total_quiz, this.level});
   @override
@@ -24,14 +24,14 @@ class _ConfirmState extends State<Confirm> {
           side: BorderSide(color: Colors.white12)),
       title: Text(widget.module_name),
       content: Text(
-        widget.total_quiz + '\n\nSelect number of question you want',
-        style: TextStyle(fontWeight: FontWeight.bold),
+        'Total question : ${widget.total_quiz.toString()}\n\n Slide a select number of question',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
       ),
       actions: <Widget>[
         Slider(
             value: _value.toDouble(),
             min: 10.0,
-            max: 50,
+            max: widget.total_quiz.toDouble(),
             divisions: 10,
             activeColor: Colors.green,
             inactiveColor: Colors.blue,
