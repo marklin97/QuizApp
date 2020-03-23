@@ -25,9 +25,7 @@ class _ModuleState extends State<Module> {
               color: Colors.blue,
               size: 80.0,
             ),
-            SizedBox(
-              width: 20,
-            ),
+            Padding(padding: EdgeInsets.all(20)),
             new Column(
               children: <Widget>[
                 Text(
@@ -43,7 +41,7 @@ class _ModuleState extends State<Module> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 15),
+                Padding(padding: EdgeInsets.all(15)),
                 Text(
                   widget.level,
                   style: TextStyle(
@@ -56,7 +54,7 @@ class _ModuleState extends State<Module> {
             // layout
           ],
         ),
-        splashColor: Colors.red[500],
+        splashColor: Colors.red[400],
         color: Colors.white,
         onPressed: () => showDialog(
             context: context,
@@ -67,8 +65,9 @@ class _ModuleState extends State<Module> {
               );
             }),
         shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(18.0),
-            side: BorderSide(color: Colors.white12)),
+          borderRadius: new BorderRadius.circular(18.0),
+          side: BorderSide(color: Colors.white24),
+        ),
       ),
     );
   }

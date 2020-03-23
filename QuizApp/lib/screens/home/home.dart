@@ -51,6 +51,13 @@ class Home extends StatelessWidget {
               level: 'Level : Senior',
               icon: Icons.assignment,
             ),
+            SizedBox(height: 20),
+            new Module(
+              module_name: 'Criminal Code Act 1995',
+              total_quiz: 50,
+              level: 'Level : Senior',
+              icon: Icons.assignment,
+            ),
           ],
         ),
       )),

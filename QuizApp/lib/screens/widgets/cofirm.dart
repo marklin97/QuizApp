@@ -24,8 +24,8 @@ class _ConfirmState extends State<Confirm> {
           side: BorderSide(color: Colors.white12)),
       title: Text(widget.module_name),
       content: Text(
-        'Total question : ${widget.total_quiz.toString()}\n\n Slide a select number of question',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        'Total question : ${widget.total_quiz.toString()}\n\n Slide to select number of questions',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
       actions: <Widget>[
         Slider(
@@ -58,6 +58,7 @@ class _ConfirmState extends State<Confirm> {
             FlatButton(
               child: const Text('START'),
               onPressed: () {
+                Navigator.of(context).pop(ConfirmAction.ACCEPT);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => PoliceAct()),
