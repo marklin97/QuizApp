@@ -8,10 +8,23 @@ class PoliceAct extends StatefulWidget {
 
 var finalScore = 0;
 var questionNumber = 0;
+var temp = 0;
 var quiz = new AnimalQuiz();
 
-var unSelectedColor = null;
-var selectedColor = Colors.blue;
+int _optionSelected = 0;
+
+class OptionValue {
+  final int _key;
+  final String _value;
+  OptionValue(this._value, this._key);
+}
+
+final _buttonOptions = [
+  OptionValue("This is a sample question 1", 1),
+  OptionValue("This is a sample question 2", 2),
+  OptionValue("This is a sample question 3", 3),
+  OptionValue("This is a sample question 4", 4),
+];
 
 class AnimalQuiz {
   var questions = [
@@ -36,15 +49,6 @@ class _PoliceActState extends State<PoliceAct> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    bool selected = false;
-    void selectAnswer() {
-      if (selected == false) {
-        setState(() {
-          unSelectedColor = selectedColor;
-          selected = true;
-        });
-      } else {}
-    }
 
     return new Scaffold(
         appBar: PreferredSize(
@@ -74,7 +78,6 @@ class _PoliceActState extends State<PoliceAct> {
             alignment: Alignment.topCenter,
             child: new Column(
               children: <Widget>[
-                new Padding(padding: EdgeInsets.all(10.0)),
                 new Container(
                   alignment: Alignment.centerRight,
                   child: new Row(
@@ -82,8 +85,7 @@ class _PoliceActState extends State<PoliceAct> {
                     children: <Widget>[],
                   ),
                 ),
-                // image
-
+                // image optional
                 ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.asset(
@@ -91,245 +93,103 @@ class _PoliceActState extends State<PoliceAct> {
                         fit: BoxFit.fill,
                         height: height / 3.5)),
 
-                Padding(padding: EdgeInsets.all(20)),
+                Padding(padding: EdgeInsets.all(10)),
                 new Text(
                   quiz.questions[questionNumber],
                   style: new TextStyle(fontSize: 20),
                 ),
-                Padding(padding: EdgeInsets.all(10)),
+                Padding(padding: EdgeInsets.all(20)),
                 new Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: _buttonOptions
+                      .map((timeValue) => RadioListTile(
+                            dense: true,
+                            title: Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text(
+                                timeValue._value,
+                                style: new TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            value: timeValue._key,
+                            groupValue: _optionSelected,
+                            controlAffinity: ListTileControlAffinity.trailing,
+                            onChanged: (val) {
+                              setState(() {
+                                debugPrint('VAL = $val');
+
+                                _optionSelected = val;
+                              });
+                            },
+                          ))
+                      .toList(),
+                ),
+                // submit button
+                Padding(padding: EdgeInsets.all(20)),
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    // button 1
-                    new Container(
-                        width: width / 1.2,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 1.0, color: Colors.black),
-                          ),
-                          color: Colors.white,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            new Text(
-                              'sample choice 1',
-                              style: new TextStyle(
-                                fontSize: 22,
-                                color: Colors.blueAccent[400],
-                              ),
-                            ),
-                            MaterialButton(
-                                height: 20,
-                                minWidth: 10,
-                                color: unSelectedColor,
-                                shape: new CircleBorder(
-                                  side: BorderSide(
-                                      color: Colors.blue,
-                                      width: 1,
-                                      style: BorderStyle.solid),
-                                ),
-                                onPressed: () {
-                                  if (quiz.choices[questionNumber][0] ==
-                                      quiz.correctAnswers[questionNumber]) {
-                                    debugPrint("Correct");
-                                    finalScore++;
-                                  } else {
-                                    debugPrint("Wrong");
-                                  }
-                                  updateQuestion();
-                                }),
-                          ],
+                    new MaterialButton(
+                        minWidth: 100.0,
+                        height: 40.0,
+                        color: Colors.red,
+                        onPressed: resetQuiz,
+                        child: new Text(
+                          "Quit",
+                          style: new TextStyle(
+                              fontSize: 18.0, color: Colors.white),
                         )),
-                    // button 2
-                    new Container(
-                      width: width / 1.2,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(width: 1.0, color: Colors.black),
-                        ),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          new Text(
-                            'sample choice 2',
-                            style: new TextStyle(
-                              fontSize: 22,
-                              color: Colors.blueAccent[400],
-                            ),
-                          ),
-                          MaterialButton(
-                              height: 20,
-                              minWidth: 10,
-                              color: unSelectedColor,
-                              shape: new CircleBorder(
-                                side: BorderSide(
-                                    color: Colors.blue,
-                                    width: 1,
-                                    style: BorderStyle.solid),
-                              ),
-                              onPressed: () {
-                                if (quiz.choices[questionNumber][1] ==
-                                    quiz.correctAnswers[questionNumber]) {
-                                  debugPrint("Correct");
-                                  finalScore++;
-                                } else {
-                                  debugPrint("Wrong");
-                                }
-                                updateQuestion();
-                              }),
-                        ],
+                    MaterialButton(
+                      minWidth: 100.0,
+                      height: 40.0,
+                      color: Colors.green,
+                      onPressed: () {
+                        if (quiz.choices[questionNumber][0] ==
+                            quiz.correctAnswers[questionNumber]) {
+                          debugPrint("Correct");
+                          finalScore++;
+                        } else {
+                          debugPrint("Wrong");
+                        }
+                        updateQuestion();
+                      },
+                      child: new Text(
+                        'Next',
+                        style:
+                            new TextStyle(fontSize: 20.0, color: Colors.white),
                       ),
                     ),
-                    new Container(
-                      width: width / 1.2,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(width: 1.0, color: Colors.black),
-                        ),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          new Text(
-                            'sample choice 3',
-                            style: new TextStyle(
-                              fontSize: 22,
-                              color: Colors.blueAccent[400],
-                            ),
-                          ),
-                          MaterialButton(
-                              height: 20,
-                              minWidth: 10,
-                              color: unSelectedColor,
-                              shape: new CircleBorder(
-                                side: BorderSide(
-                                    color: Colors.blue,
-                                    width: 1,
-                                    style: BorderStyle.solid),
-                              ),
-                              onPressed: () {
-                                if (quiz.choices[questionNumber][2] ==
-                                    quiz.correctAnswers[questionNumber]) {
-                                  debugPrint("Correct");
-                                  finalScore++;
-                                } else {
-                                  debugPrint("Wrong");
-                                }
-                                updateQuestion();
-                              }),
-                        ],
-                      ),
-                    ),
-                    new Container(
-                      width: width / 1.2,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(width: 1.0, color: Colors.black),
-                        ),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          new Text(
-                            'sample choice 4',
-                            style: new TextStyle(
-                              fontSize: 22,
-                              color: Colors.blueAccent[400],
-                            ),
-                          ),
-                          MaterialButton(
-                              height: 20,
-                              minWidth: 10,
-                              color: unSelectedColor,
-                              shape: new CircleBorder(
-                                side: BorderSide(
-                                    color: Colors.blue,
-                                    width: 1,
-                                    style: BorderStyle.solid),
-                              ),
-                              onPressed: () {
-                                if (quiz.choices[questionNumber][3] ==
-                                    quiz.correctAnswers[questionNumber]) {
-                                  debugPrint("Correct");
-                                  finalScore++;
-                                } else {
-                                  debugPrint("Wrong");
-                                }
-                                updateQuestion();
-                              }),
-                        ],
-                      ),
-                    ),
-                    new Padding(padding: EdgeInsets.all(15.0)),
                   ],
-                )
+                ),
               ],
             )));
   }
 
   void resetQuiz() {
     setState(() {
+      Navigator.pop(context);
       finalScore = 0;
       questionNumber = 0;
-      Navigator.pop(context);
     });
   }
 
   void updateQuestion() {
     setState(() {
+      temp = finalScore;
       if (questionNumber == quiz.questions.length - 1) {
         Navigator.push(
             context,
             new MaterialPageRoute(
                 builder: (context) => new Summary(
-                      score: finalScore,
+                      score: temp,
+                      questionNumber: questionNumber,
                     )));
+        questionNumber = 0;
+        finalScore = 0;
       } else {
         questionNumber++;
+        _optionSelected = 0;
       }
     });
-  }
-}
-
-class Summary extends StatelessWidget {
-  final int score;
-  Summary({Key key, @required this.score}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    int count = 0;
-    return new Scaffold(
-      body: new Container(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              "Final Score: $score",
-              style: new TextStyle(fontSize: 35.0),
-            ),
-            new Padding(padding: EdgeInsets.all(30.0)),
-            new MaterialButton(
-              color: Colors.red,
-              onPressed: () {
-                questionNumber = 0;
-                finalScore = 0;
-                Navigator.popUntil(context, (route) {
-                  return count++ == 2;
-                });
-              },
-              child: new Text(
-                "Reset Quiz",
-                style: new TextStyle(fontSize: 20.0, color: Colors.white),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
   }
 }
