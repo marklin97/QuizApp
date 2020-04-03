@@ -10,20 +10,28 @@ var finalScore = 0;
 var questionNumber = 0;
 var temp = 0;
 var quiz = new AnimalQuiz();
-
+bool selected = false;
 int _optionSelected = 0;
 
 class OptionValue {
-  final int _key;
+  final bool _key;
   final String _value;
   OptionValue(this._value, this._key);
 }
 
 final _buttonOptions = [
-  OptionValue("This is a sample question 1", 1),
-  OptionValue("This is a sample question 2", 2),
-  OptionValue("This is a sample question 3", 3),
-  OptionValue("This is a sample question 4", 4),
+  [
+    OptionValue("This is a sample Answer 1", true),
+    OptionValue("This is a sample Answer 2", false),
+    OptionValue("This is a sample Answer 3", false),
+    OptionValue("This is a sample Answer 4", false),
+  ],
+  [
+    OptionValue("This is a sample Answer 1", true),
+    OptionValue("This is a sample Answer 2", false),
+    OptionValue("This is a sample Answer 3", true),
+    OptionValue("This is a sample Answer 4", true),
+  ],
 ];
 
 class AnimalQuiz {
@@ -33,23 +41,28 @@ class AnimalQuiz {
     "This is a sample question 3 ",
     "This is a sample question 4 ",
   ];
-
-  var choices = [
-    ["1", "2", "3", "4"],
-    ["1", "2", "3", "4"],
-    ["1", "2", "3", "4"],
-    ["1", "2", "3", "4"],
-  ];
-
-  var correctAnswers = ["1", "2", "3", "4"];
 }
+
+List<Color> _color = [
+  Colors.black,
+  Colors.black,
+  Colors.black,
+  Colors.black,
+].toList();
+
+List<Icon> _icon = [
+  Icon(null),
+  Icon(null),
+  Icon(null),
+  Icon(null),
+].toList();
 
 class _PoliceActState extends State<PoliceAct> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    Color color;
+
     return new Scaffold(
       backgroundColor: Colors.green[50],
       appBar: PreferredSize(
@@ -69,7 +82,7 @@ class _PoliceActState extends State<PoliceAct> {
               "Score: $finalScore",
             ),
           ]),
-          backgroundColor: Colors.blue[400],
+          backgroundColor: Colors.green[400],
           elevation: 0.0,
         ),
       ),
@@ -92,23 +105,22 @@ class _PoliceActState extends State<PoliceAct> {
                 ),
               ),
               // image (optional)
-              Padding(padding: EdgeInsets.all(10)),
 
-              new Text(
-                quiz.questions[questionNumber],
-                style: new TextStyle(fontSize: 20),
-              ),
-              Padding(padding: EdgeInsets.all(20)),
               ClipRRect(
                 // borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
                   "assets/quiz_image_${questionNumber + 1}.jpg",
                   fit: BoxFit.fill,
-                  height: height / 4,
+                  height: height / 3.5,
                   width: width,
                 ),
               ),
-
+              Padding(padding: EdgeInsets.all(10)),
+              new Text(
+                quiz.questions[questionNumber],
+                style: new TextStyle(fontSize: 20),
+              ),
+              Padding(padding: EdgeInsets.all(10)),
               // break line
               Row(children: <Widget>[
                 Expanded(
@@ -117,81 +129,57 @@ class _PoliceActState extends State<PoliceAct> {
                   thickness: 2,
                 )),
               ]),
-              new Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: _buttonOptions
-                    .map(
-                      (timeValue) => Column(children: <Widget>[
-                        Container(
-                          color: color,
-                          child: RadioListTile(
-                            dense: true,
-                            activeColor: Colors.blue,
-                            title: Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                timeValue._value,
-                                style: new TextStyle(fontSize: 20),
-                              ),
+              Expanded(
+                child: new ListView.builder(
+                  itemCount: _buttonOptions[questionNumber].length,
+                  itemBuilder: (BuildContext context, int index) {
+                    String key =
+                        _buttonOptions[questionNumber].elementAt(index)._value;
+                    var validate =
+                        _buttonOptions[questionNumber].elementAt(index)._key;
+                    return new Column(
+                      children: <Widget>[
+                        new ListTile(
+                            title: new Text(
+                              "$key",
+                              style: TextStyle(
+                                  color: _color[index],
+                                  fontWeight: FontWeight.bold),
                             ),
-                            value: timeValue._key,
-                            groupValue: _optionSelected,
-                            controlAffinity: ListTileControlAffinity.trailing,
-                            onChanged: (val) {
-                              setState(() {
-                                debugPrint('VAL = $val');
-                                color = Colors.lightGreen;
-                                _optionSelected = val;
-                              });
-                            },
-                          ),
-                        ),
-                        Divider(
-                          height: 2,
-                          color: Colors.blueGrey,
-                          thickness: 1,
-                        )
-                      ]),
-                    )
-                    .toList(),
-              ),
+                            trailing: _icon[index],
+                            onTap: () {
+                              if (selected == false) {
+                                if (validate == true) {
+                                  setState(() {
+                                    _color[index] = Colors.green[400];
 
-              // submit button
-              Padding(padding: EdgeInsets.all(20)),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  new MaterialButton(
-                      minWidth: 100.0,
-                      height: 40.0,
-                      color: Colors.red,
-                      onPressed: resetQuiz,
-                      child: new Text(
-                        "Quit",
-                        style:
-                            new TextStyle(fontSize: 18.0, color: Colors.white),
-                      )),
-                  MaterialButton(
-                    minWidth: 100.0,
-                    height: 40.0,
-                    color: Colors.blue,
-                    onPressed: () {
-                      if (quiz.choices[questionNumber][0] ==
-                          quiz.correctAnswers[questionNumber]) {
-                        debugPrint("Correct");
-                        finalScore++;
-                      } else {
-                        debugPrint("Wrong");
-                      }
-                      updateQuestion();
-                    },
-                    child: new Text(
-                      'Next',
-                      style: new TextStyle(fontSize: 20.0, color: Colors.white),
-                    ),
-                  ),
-                ],
+                                    _icon[index] = Icon(
+                                      Icons.done,
+                                      color: Colors.green,
+                                    );
+                                    selected = true;
+                                  });
+                                } else {
+                                  setState(() {
+                                    _color[index] = Colors.red[400];
+                                    _icon[index] = Icon(
+                                      Icons.close,
+                                      color: Colors.red,
+                                    );
+                                    selected = true;
+                                  });
+                                }
+                              }
+                            }),
+                        new Divider(
+                          height: 2.0,
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
+              // submit button
             ],
           ),
         ),
