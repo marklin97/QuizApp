@@ -49,61 +49,84 @@ class _PoliceActState extends State<PoliceAct> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
+    Color color;
     return new Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
-          child: AppBar(
-            leading: new IconButton(
-              icon: new Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () => resetQuiz(),
-            ),
-            centerTitle: true,
-            title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Question ${questionNumber + 1} of ${quiz.questions.length}",
-                  ),
-                  Text(
-                    "Score: $finalScore",
-                  ),
-                ]),
-            backgroundColor: Colors.blue[400],
-            elevation: 0.0,
+      backgroundColor: Colors.green[50],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => resetQuiz(),
           ),
+          centerTitle: true,
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text(
+              "Question ${questionNumber + 1} of ${quiz.questions.length}",
+            ),
+            Text(
+              "Score: $finalScore",
+            ),
+          ]),
+          backgroundColor: Colors.blue[400],
+          elevation: 0.0,
         ),
-        body: new Container(
-            margin: const EdgeInsets.all(10.0),
-            alignment: Alignment.topCenter,
-            child: new Column(
-              children: <Widget>[
-                new Container(
-                  alignment: Alignment.centerRight,
-                  child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[],
-                  ),
+      ),
+      body: SingleChildScrollView(
+        child: new Container(
+          decoration: new BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          height: height / 1.2,
+          margin: const EdgeInsets.all(15.0),
+          alignment: Alignment.topCenter,
+          child: new Column(
+            children: <Widget>[
+              new Container(
+                alignment: Alignment.centerRight,
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[],
                 ),
-                // image optional
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset(
-                        "assets/quiz_image_${questionNumber + 1}.jpg",
-                        fit: BoxFit.fill,
-                        height: height / 3.5)),
+              ),
+              // image (optional)
+              Padding(padding: EdgeInsets.all(10)),
 
-                Padding(padding: EdgeInsets.all(10)),
-                new Text(
-                  quiz.questions[questionNumber],
-                  style: new TextStyle(fontSize: 20),
+              new Text(
+                quiz.questions[questionNumber],
+                style: new TextStyle(fontSize: 20),
+              ),
+              Padding(padding: EdgeInsets.all(20)),
+              ClipRRect(
+                // borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  "assets/quiz_image_${questionNumber + 1}.jpg",
+                  fit: BoxFit.fill,
+                  height: height / 4,
+                  width: width,
                 ),
-                Padding(padding: EdgeInsets.all(20)),
-                new Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: _buttonOptions
-                      .map((timeValue) => RadioListTile(
+              ),
+
+              // break line
+              Row(children: <Widget>[
+                Expanded(
+                    child: Divider(
+                  color: Colors.green[400],
+                  thickness: 2,
+                )),
+              ]),
+              new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: _buttonOptions
+                    .map(
+                      (timeValue) => Column(children: <Widget>[
+                        Container(
+                          color: color,
+                          child: RadioListTile(
                             dense: true,
+                            activeColor: Colors.blue,
                             title: Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: Text(
@@ -117,52 +140,63 @@ class _PoliceActState extends State<PoliceAct> {
                             onChanged: (val) {
                               setState(() {
                                 debugPrint('VAL = $val');
-
+                                color = Colors.lightGreen;
                                 _optionSelected = val;
                               });
                             },
-                          ))
-                      .toList(),
-                ),
-                // submit button
-                Padding(padding: EdgeInsets.all(20)),
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    new MaterialButton(
-                        minWidth: 100.0,
-                        height: 40.0,
-                        color: Colors.red,
-                        onPressed: resetQuiz,
-                        child: new Text(
-                          "Quit",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        )),
-                    MaterialButton(
+                          ),
+                        ),
+                        Divider(
+                          height: 2,
+                          color: Colors.blueGrey,
+                          thickness: 1,
+                        )
+                      ]),
+                    )
+                    .toList(),
+              ),
+
+              // submit button
+              Padding(padding: EdgeInsets.all(20)),
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  new MaterialButton(
                       minWidth: 100.0,
                       height: 40.0,
-                      color: Colors.green,
-                      onPressed: () {
-                        if (quiz.choices[questionNumber][0] ==
-                            quiz.correctAnswers[questionNumber]) {
-                          debugPrint("Correct");
-                          finalScore++;
-                        } else {
-                          debugPrint("Wrong");
-                        }
-                        updateQuestion();
-                      },
+                      color: Colors.red,
+                      onPressed: resetQuiz,
                       child: new Text(
-                        'Next',
+                        "Quit",
                         style:
-                            new TextStyle(fontSize: 20.0, color: Colors.white),
-                      ),
+                            new TextStyle(fontSize: 18.0, color: Colors.white),
+                      )),
+                  MaterialButton(
+                    minWidth: 100.0,
+                    height: 40.0,
+                    color: Colors.blue,
+                    onPressed: () {
+                      if (quiz.choices[questionNumber][0] ==
+                          quiz.correctAnswers[questionNumber]) {
+                        debugPrint("Correct");
+                        finalScore++;
+                      } else {
+                        debugPrint("Wrong");
+                      }
+                      updateQuestion();
+                    },
+                    child: new Text(
+                      'Next',
+                      style: new TextStyle(fontSize: 20.0, color: Colors.white),
                     ),
-                  ],
-                ),
-              ],
-            )));
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   void resetQuiz() {
