@@ -15,6 +15,7 @@ class _ModuleState extends State<Module> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+
     return Container(
       child: new MaterialButton(
         height: height / 4,
@@ -22,7 +23,6 @@ class _ModuleState extends State<Module> {
           children: <Widget>[
             Icon(
               widget.icon,
-              color: Colors.blue,
               size: 80.0,
             ),
             Padding(padding: EdgeInsets.all(20)),
@@ -30,23 +30,22 @@ class _ModuleState extends State<Module> {
               children: <Widget>[
                 Text(
                   widget.module_name,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 15),
                 Text(
                   'Total questions : ${widget.total_quiz}',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+                  style: TextStyle(fontSize: 18, color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
                 Padding(padding: EdgeInsets.all(15)),
                 Text(
                   widget.level,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+                  style: TextStyle(fontSize: 18, color: Colors.black),
                 ),
               ],
             )
@@ -66,7 +65,6 @@ class _ModuleState extends State<Module> {
             }),
         shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(18.0),
-          side: BorderSide(color: Colors.white24),
         ),
       ),
     );

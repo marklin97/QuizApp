@@ -32,13 +32,18 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue[400],
         elevation: 0.0,
         title: Text('Sign up to Quiz App'),
         actions: <Widget>[
           FlatButton.icon(
-            icon: Icon(Icons.account_circle),
-            label: Text('Sign in'),
+            icon: Icon(
+              Icons.account_circle,
+              color: Colors.white,
+            ),
+            label: Text(
+              'Sign in',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
             onPressed: () {
               widget.toggleView();
             },

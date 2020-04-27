@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+int fontSize = 0;
+double letterSpacing = 0.5;
+Color colorTheme = Colors.red;
+
 const textInputDecoration = InputDecoration(
   errorStyle: TextStyle(fontSize: 14.0),
   fillColor: Colors.white,
@@ -11,7 +15,7 @@ const textInputDecoration = InputDecoration(
     borderSide: BorderSide(color: Colors.green, width: 2.0),
   ),
 );
-
+/*
 dynamic layout = new Column(
   children: <Widget>[
     Text(
@@ -36,3 +40,4 @@ dynamic layout = new Column(
     ),
   ],
 );
+*/

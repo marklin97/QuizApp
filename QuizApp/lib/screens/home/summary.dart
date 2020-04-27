@@ -11,17 +11,25 @@ class Summary extends StatelessWidget {
   Widget build(BuildContext context) {
     int count = 0;
     return new Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Quiz App'),
+        elevation: 0.0,
+      ),
       body: new Container(
+        margin: const EdgeInsets.all(15.0),
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Text(
-              "Final Score: $score",
-              style: new TextStyle(fontSize: 35.0),
+            new Center(
+              child: Text(
+                "Final Score: $score",
+                style: new TextStyle(fontSize: 35.0, color: Colors.green),
+              ),
             ),
             new Padding(padding: EdgeInsets.all(30.0)),
             new MaterialButton(
-              color: Colors.red,
+              color: Colors.green,
               onPressed: () {
                 questionNumber = 0;
                 score = 0;

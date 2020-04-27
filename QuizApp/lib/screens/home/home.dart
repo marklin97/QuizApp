@@ -1,6 +1,11 @@
 import 'package:QuizApp/screens/widgets/module.dart';
 import 'package:QuizApp/services/auth.dart';
 import 'package:flutter/material.dart';
+import '../widgets/drawer.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:ui';
+
+// Retrive the user customised setting
 
 class Home extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -11,19 +16,24 @@ class Home extends StatelessWidget {
         child: Scaffold(
       appBar: AppBar(
         title: Text('Quiz App'),
-        backgroundColor: Colors.blue[400],
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('logout'),
+            icon: Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
+            label: Text(
+              'LOGOUT',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
             onPressed: () async {
-              //
               await _auth.signOut();
             },
           ),
         ],
       ),
+      drawer: DrawerBar(),
       body: SingleChildScrollView(
           child: new Container(
         margin: new EdgeInsets.all(10.0),
@@ -32,8 +42,8 @@ class Home extends StatelessWidget {
           children: <Widget>[
             SizedBox(height: 20),
             new Module(
-              module_name: 'Police Act 1990',
-              total_quiz: 30,
+              module_name: 'Sample Questions',
+              total_quiz: 4,
               level: 'Level : Junior',
               icon: Icons.assessment,
             ),

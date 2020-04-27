@@ -3,6 +3,22 @@ import 'package:flutter/material.dart';
 import './screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import './models/user.dart';
+import './screens/widgets/theme.dart';
+
+ThemeData setTheme(String theme) {
+  if (theme == 'blue') {
+    return light;
+  }
+  if (theme == 'purple') {
+    return dark;
+  }
+  if (theme == 'red') {
+    return red;
+  }
+  if (theme == 'green') {
+    return green;
+  }
+}
 
 void main() => runApp(MyApp());
 
@@ -12,10 +28,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       value: AuthService().user,
-      child: MaterialApp(
-        //theme: new ThemeData(scaffoldBackgroundColor: Colors.white),
-        debugShowCheckedModeBanner: false,
-        home: Wrapper(),
+      child: ChangeNotifierProvider(
+        create: (_) => ThemeNotifier(),
+        child: Consumer<ThemeNotifier>(
+          builder: (context, ThemeNotifier notifier, child) {
+            return MaterialApp(
+              title: 'Flutter Theme Provider',
+              debugShowCheckedModeBanner: false,
+              theme: setTheme(notifier.colorTheme),
+              home: Wrapper(),
+            );
+          },
+        ),
       ),
     );
   }

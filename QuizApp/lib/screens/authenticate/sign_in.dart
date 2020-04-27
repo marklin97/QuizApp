@@ -29,15 +29,17 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue[400],
         elevation: 0.0,
         title: Text('Sign in to Quiz APP'),
         actions: <Widget>[
           FlatButton.icon(
-            icon: Icon(Icons.account_circle),
+            icon: Icon(
+              Icons.account_circle,
+              color: Colors.white,
+            ),
             label: Text(
               'Register',
-              style: TextStyle(fontSize: 17.0),
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             onPressed: () {
               widget.toggleView();
