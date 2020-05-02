@@ -1,147 +1,43 @@
 import 'package:QuizApp/screens/home/summary.dart';
 import 'package:flutter/material.dart';
+import 'package:QuizApp/screens/quizBank/questions.dart';
+import 'dart:async';
 
 class PoliceAct extends StatefulWidget {
   final int selectedNumber;
-
   @override
   _PoliceActState createState() => _PoliceActState();
 
   PoliceAct({this.selectedNumber});
 }
 
+// temporary vairable for storing user
 double finalScore = 0;
-var questionNumber = 0;
 double temp = 0;
 bool selected = false;
+Timer _timer;
+var questionNumber = 0;
+var _color = color;
+var _icon = icon;
+var _checkBox = checkBox;
+var _hint = hint;
 
-class OptionValue {
-  final bool _key;
-  final String _value;
-  final String _hint;
-  OptionValue(this._value, this._key, this._hint);
-}
-
-class question {
-  final String text;
-  final String type;
-  final String imageId;
-  question(this.text, this.type, this.imageId);
-}
-
-var questions = [
-  [
-    question(
-        'You are a male police officer and detain a woman you suspect is attempting to smuggle illicit substances into Download Music Festival in Parramatta Park. You have told her you will conduct a strip search on her. Is this allowed?',
-        'true false',
-        null)
-  ],
-  [
-    question(
-        'You are a male police officer who has detained a male suspect at Download Music Festival in Parramatta Park. The male suspect tells you he is uncomfortable with stripping in front of your police body-cam, and asks you to switch it off. What is the proper way of responding to this problem?',
-        'multiple choice',
-        null)
-  ],
-  [
-    question(
-        'Police are required to make contemporaneous records of all person searches. What should be included in this record?  \n\na.	The type of search carried out \nb.	The reason for the search \nc.	The officer/s who carried out the search \nd.	Whether force was used',
-        'multiple choice',
-        null)
-  ],
-  [
-    question(
-        'You find a brand new jacket in a person’s backpack with a tag still attached. They are not carrying a bag or any sort of packaging from the store they had gotten it from, nor can they provide a receipt. They claim to have paid for it using cash if questioned about transaction history.',
-        'multiple choice',
-        null)
-  ],
-];
-
+// temp variable use to store the questions
 var tempArray = questions;
-final _buttonOptions = [
-  [
-    OptionValue("1. True", true, ''),
-    OptionValue("2. False", false,
-        'Consider what the Person Search manual says about searching the opposite sex'),
-  ],
-  [
-    OptionValue(
-        "1. Invite another police officer in to make it less awkward",
-        false,
-        'this may lead to escalation. Would be hard to diffuse the situation if you undertook this option'),
-    OptionValue(
-        "2. Tell the suspect you are legally obligated to film all strip searches as it is a form of evidence to prove guilt or innocence",
-        false,
-        'The NSW Court of Criminal Appeal '),
-    OptionValue("3. Release him since he’s being troublesome", false,
-        'Defensiveness is suspicious. How do we know he didn’t have drugs?'),
-    OptionValue("4. Grab him and tear off his clothes", false,
-        'this could lead to your suspension and possible imprisonment for brutality'),
-  ],
-  [
-    OptionValue("1. A and B", true, ''),
-    OptionValue("2. A and C", false, ''),
-    OptionValue("3. B, C and D", false, ''),
-    OptionValue("4. A,B,C and D", false, ''),
-  ],
-  [
-    OptionValue(
-        "1. You find a brand new jacket in a person’s backpack with a tag still attached. They are not carrying a bag or any sort of packaging from the store they had gotten it from, nor can they provide a receipt. They claim to have paid for it using cash if questioned about transaction history.",
-        true,
-        ' '),
-    OptionValue(
-        "2. You approach a person at a music festival. They don’t seem entirely lucid. You ask them a series of questions.\n Q: How did you get here? \n Q: Are you under the influence of anything? Alcohol or otherwise? \n Q: Can you show me any sort of identification?",
-        false,
-        ''),
-    OptionValue(
-        "3. You spot someone wandering about in the middle of the might holding a heavy flashlight and large bag. They say they are just heading home when asked.",
-        false,
-        ''),
-  ],
-];
+var _buttonOptions = options;
 
-/*
-final questions = [
-  [question('This is a sample question 1', 'multiple choice', '1')],
-  [question('This is a sample question 2', 'multiple choice', null)],
-  [question('This is a sample question 3', 'true false', '3')],
-  [question('This is a sample question 4', 'multiple answer', null)],
-];
-*/
-List<Color> _color = [
-  Colors.black,
-  Colors.black,
-  Colors.black,
-  Colors.black,
-].toList();
-
-List<Icon> _icon = [
-  Icon(null),
-  Icon(null),
-  Icon(null),
-  Icon(null),
-].toList();
-
-List<Icon> _checkBox = [
-  Icon(Icons.check_box_outline_blank),
-  Icon(Icons.check_box_outline_blank),
-  Icon(Icons.check_box_outline_blank),
-  Icon(Icons.check_box_outline_blank),
-].toList();
-
-List<Text> _hint = [
-  Text(''),
-  Text(''),
-  Text(''),
-  Text(''),
-].toList();
+// temp varaibles use to store timer state
+int _start = 30;
+Color timerColor = Colors.green;
+dynamic timerIcon = Text("$_start");
+//Icon(Icons.arrow_forward_ios);
 
 class _PoliceActState extends State<PoliceAct> {
   @override
   Widget build(BuildContext context) {
     tempArray = questions.take(widget.selectedNumber).toList();
-    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    var imageID = tempArray[questionNumber].elementAt(0).imageId;
+
     return new Scaffold(
       backgroundColor: Colors.blue[50],
       floatingActionButton: Container(
@@ -149,11 +45,13 @@ class _PoliceActState extends State<PoliceAct> {
         width: 100.0,
         child: FloatingActionButton(
           onPressed: () {
-            selected = false;
-            updateQuestion();
+            if (selected == true) {
+              selected = false;
+              updateQuestion();
+            }
           },
-          child: Icon(Icons.arrow_forward_ios),
-          backgroundColor: Colors.green,
+          child: timerIcon,
+          backgroundColor: timerColor,
         ),
       ),
       appBar: PreferredSize(
@@ -221,14 +119,14 @@ class _PoliceActState extends State<PoliceAct> {
                 child: new ListView.builder(
                     itemCount: _buttonOptions[questionNumber].length,
                     itemBuilder: (BuildContext context, int index) {
-                      String key = _buttonOptions[questionNumber]
-                          .elementAt(index)
-                          ._value;
+                      // retrive option details
+                      String key =
+                          _buttonOptions[questionNumber].elementAt(index).value;
 
-                      var validate =
-                          _buttonOptions[questionNumber].elementAt(index)._key;
+                      bool validate =
+                          _buttonOptions[questionNumber].elementAt(index).key;
                       String hint =
-                          _buttonOptions[questionNumber].elementAt(index)._hint;
+                          _buttonOptions[questionNumber].elementAt(index).hint;
 
                       String type = tempArray[questionNumber].elementAt(0).type;
 
@@ -321,37 +219,78 @@ class _PoliceActState extends State<PoliceAct> {
     );
   }
 
-  void resetQuiz() {
-    setState(() {
-      Navigator.pop(context);
-      finalScore = 0;
-      questionNumber = 0;
-      selected = !selected;
-      _color = [
-        Colors.black,
-        Colors.black,
-        Colors.black,
-        Colors.black,
-      ];
-      _icon = [
-        Icon(null),
-        Icon(null),
-        Icon(null),
-        Icon(null),
-      ];
-      _hint = [
-        Text(''),
-        Text(''),
-        Text(''),
-        Text(''),
-      ];
+  void startTimer() async {
+    const oneSec = Duration(seconds: 1);
+    _timer = new Timer.periodic(oneSec, (Timer timer) {
+      setState(() {
+        if (_start < 20) {
+          timerColor = Colors.red;
+        }
+        if (_start < 1) {
+          timer.cancel();
+          updateQuestion();
+        } else if (selected == true) {
+          timer.cancel();
+          timerIcon = Icon(Icons.arrow_forward_ios);
+        } else {
+          _start = _start - 1;
+          timerIcon = Text("$_start");
+        }
+      });
     });
   }
 
+  void clearState() {
+    _color = [
+      Colors.black,
+      Colors.black,
+      Colors.black,
+      Colors.black,
+    ];
+    _icon = [
+      Icon(null),
+      Icon(null),
+      Icon(null),
+      Icon(null),
+    ];
+    _checkBox = [
+      Icon(Icons.check_box_outline_blank),
+      Icon(Icons.check_box_outline_blank),
+      Icon(Icons.check_box_outline_blank),
+      Icon(Icons.check_box_outline_blank),
+    ];
+
+    _hint = [
+      Text(''),
+      Text(''),
+      Text(''),
+      Text(''),
+    ];
+  }
+
+  void resetQuiz() {
+    setState(() {
+      Navigator.pop(context);
+      _start = 30;
+      finalScore = 0;
+      questionNumber = 0;
+      selected = !selected;
+      clearState();
+    });
+  }
+
+  @override
+  void initState() {
+    startTimer();
+    super.initState();
+  }
+
   void updateQuestion() {
+    _start = 30;
+
     setState(() {
       temp = finalScore;
-
+      timerColor = Colors.green;
       if (questionNumber == tempArray.length - 1) {
         Navigator.push(
             context,
@@ -362,55 +301,15 @@ class _PoliceActState extends State<PoliceAct> {
                     )));
         questionNumber = 0;
         finalScore = 0;
-        selected = false;
-        _color = [
-          Colors.black,
-          Colors.black,
-          Colors.black,
-          Colors.black,
-        ];
-        _icon = [
-          Icon(null),
-          Icon(null),
-          Icon(null),
-          Icon(null),
-        ];
-        _checkBox = [
-          Icon(Icons.check_box_outline_blank),
-          Icon(Icons.check_box_outline_blank),
-          Icon(Icons.check_box_outline_blank),
-          Icon(Icons.check_box_outline_blank),
-        ];
 
-        _hint = [
-          Text(''),
-          Text(''),
-          Text(''),
-          Text(''),
-        ];
+        selected = false;
+        clearState();
       } else {
         questionNumber++;
         selected = false;
-        _color = [
-          Colors.black,
-          Colors.black,
-          Colors.black,
-          Colors.black,
-        ];
-
-        _icon = [
-          Icon(null),
-          Icon(null),
-          Icon(null),
-          Icon(null),
-        ];
-        _hint = [
-          Text(''),
-          Text(''),
-          Text(''),
-          Text(''),
-        ];
+        clearState();
       }
     });
+    startTimer();
   }
 }

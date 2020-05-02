@@ -104,11 +104,6 @@ class _SettingState extends State<Setting> {
               color: Colors.grey,
               thickness: 0.5,
             ),
-            new Divider(
-              height: 60,
-              color: Colors.grey,
-              thickness: 0.5,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
