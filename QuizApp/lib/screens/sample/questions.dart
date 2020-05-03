@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 
 // question class
-class question {
+class Question {
   final String text;
   final String type;
   final String imageId;
-  question(this.text, this.type, this.imageId);
+  Question(this.text, this.type, this.imageId);
 }
 
 // list of question object
 var questions = [
   [
-    question(
+    Question(
         'You are a male police officer and detain a woman you suspect is attempting to smuggle illicit substances into Download Music Festival in Parramatta Park. You have told her you will conduct a strip search on her. Is this allowed?',
         'true false',
         null)
   ],
   [
-    question(
+    Question(
         'You are a male police officer who has detained a male suspect at Download Music Festival in Parramatta Park. The male suspect tells you he is uncomfortable with stripping in front of your police body-cam, and asks you to switch it off. What is the proper way of responding to this problem?',
         'multiple choice',
         null)
   ],
   [
-    question(
+    Question(
         'Police are required to make contemporaneous records of all person searches. What should be included in this record?  \n\na.	The type of search carried out \nb.	The reason for the search \nc.	The officer/s who carried out the search \nd.	Whether force was used',
         'multiple choice',
         null)
   ],
   [
-    question(
+    Question(
         'You find a brand new jacket in a person’s backpack with a tag still attached. They are not carrying a bag or any sort of packaging from the store they had gotten it from, nor can they provide a receipt. They claim to have paid for it using cash if questioned about transaction history.',
         'multiple choice',
         null)

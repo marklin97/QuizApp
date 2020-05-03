@@ -18,6 +18,7 @@ ThemeData setTheme(String theme) {
   if (theme == 'green') {
     return green;
   }
+  return light;
 }
 
 void main() => runApp(MyApp());

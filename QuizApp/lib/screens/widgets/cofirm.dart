@@ -1,13 +1,13 @@
-import 'package:QuizApp/screens/quizBank/policeAct.dart';
+import 'package:QuizApp/screens/modules/sample/policeAct.dart';
 import 'package:flutter/material.dart';
 
 enum ConfirmAction { CANCEL, ACCEPT }
 
 class Confirm extends StatefulWidget {
-  final String module_name;
-  final int total_quiz;
+  final String moduleName;
+  final int totalQuiz;
   final String level;
-  Confirm({this.module_name, this.total_quiz, this.level});
+  Confirm({this.moduleName, this.totalQuiz, this.level});
   @override
   _ConfirmState createState() => _ConfirmState();
 }
@@ -20,17 +20,17 @@ class _ConfirmState extends State<Confirm> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double min = 1.0;
-    double max = widget.total_quiz.toDouble();
+    double max = widget.totalQuiz.toDouble();
     int divisions = (max - min).toInt();
 
-    if (widget.module_name == 'Sample Questions') {
+    if (widget.moduleName == 'Sample Questions') {
       return AlertDialog(
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(18.0),
             side: BorderSide(color: Colors.white12)),
-        title: Text(widget.module_name),
+        title: Text(widget.moduleName),
         content: Text(
-          'Total question : ${widget.total_quiz.toString()}\n\n Slide to select number of questions',
+          'Total question : ${widget.totalQuiz.toString()}\n\n Slide to select number of questions',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         actions: <Widget>[

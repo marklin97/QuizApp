@@ -14,10 +14,12 @@ class DrawerBar extends StatelessWidget {
             height: height / 2.5,
             child: DrawerHeader(
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage("assets/darwerbar.jpeg"),
-                fit: BoxFit.cover,
-              )),
+                image: DecorationImage(
+                  image: AssetImage("assets/darwerbar.jpeg"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: null,
             ),
           ),
           Padding(

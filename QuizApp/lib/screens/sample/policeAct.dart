@@ -1,6 +1,6 @@
 import 'package:QuizApp/screens/home/summary.dart';
 import 'package:flutter/material.dart';
-import 'package:QuizApp/screens/quizBank/questions.dart';
+import 'package:QuizApp/screens/modules/sample/questions.dart';
 import 'dart:async';
 
 class PoliceAct extends StatefulWidget {

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class Module extends StatefulWidget {
   final IconData icon;
-  final String module_name;
-  final int total_quiz;
+  final String moduleName;
+  final int totalQuiz;
   final String level;
-  Module({this.module_name, this.total_quiz, this.level, this.icon});
+  Module({this.moduleName, this.totalQuiz, this.level, this.icon});
   @override
   _ModuleState createState() => _ModuleState();
 }
@@ -29,7 +29,7 @@ class _ModuleState extends State<Module> {
             new Column(
               children: <Widget>[
                 Text(
-                  widget.module_name,
+                  widget.moduleName,
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -38,7 +38,7 @@ class _ModuleState extends State<Module> {
                 ),
                 SizedBox(height: 15),
                 Text(
-                  'Total questions : ${widget.total_quiz}',
+                  'Total questions : ${widget.totalQuiz}',
                   style: TextStyle(fontSize: 18, color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
@@ -59,8 +59,8 @@ class _ModuleState extends State<Module> {
             context: context,
             builder: (BuildContext context) {
               return Confirm(
-                module_name: widget.module_name,
-                total_quiz: widget.total_quiz,
+                moduleName: widget.moduleName,
+                totalQuiz: widget.totalQuiz,
               );
             }),
         shape: new RoundedRectangleBorder(

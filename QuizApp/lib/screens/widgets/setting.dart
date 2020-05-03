@@ -1,5 +1,4 @@
 //import 'package:shared_preferences/shared_preferences.dart';
-import 'package:QuizApp/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/theme.dart';
@@ -18,7 +17,6 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  @override
   String dropdownValue = '12';
   String letterSpacing = '0.5';
 
