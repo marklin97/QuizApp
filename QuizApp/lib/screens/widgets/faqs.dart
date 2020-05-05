@@ -6,10 +6,8 @@ class FAQS extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Frequently Asked Questions',
+          'USER MANUAL',
         ),
-        backgroundColor: Colors.blue[400],
-        elevation: 0.0,
       ),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) =>
@@ -31,39 +29,38 @@ class Entry {
 // The entire multilevel list displayed by this app.
 final List<Entry> data = <Entry>[
   Entry(
-    'Chapter A',
+    'INTRODUCTION',
     <Entry>[
       Entry(
-        'Section A0',
+        '     Welcome to the New South Wales Police Force Person Search Quiz App. This application is designed for current students at the New South Police Force Academy to reinforce their learning in regards to the topic of searching a person in a Music Festival Environment. \n\n     There are three modes to choose from for the quiz: Easy, Medium and Hard. In each quiz round, you are awarded a certain number of points if you answer correctly. At the end of the quiz, you awarded a total score for how many questions you answered correctly. There is a high score system, wherein the app will keep track of your high score so you can aim to beat it. If you have any further questions about the administrative side of this app, please visit the FAQ tab for more information.',
+      ),
+    ],
+  ),
+  Entry(
+    'FAQS',
+    <Entry>[
+      Entry(
+        'How do I register myself for this app?',
         <Entry>[
-          Entry('Item A0.1'),
-          Entry('Item A0.2'),
-          Entry('Item A0.3'),
+          Entry('sample answer'),
         ],
       ),
-      Entry('Section A1'),
-      Entry('Section A2'),
-    ],
-  ),
-  Entry(
-    'Chapter B',
-    <Entry>[
-      Entry('Section B0'),
-      Entry('Section B1'),
-    ],
-  ),
-  Entry(
-    'Chapter C',
-    <Entry>[
-      Entry('Section C0'),
-      Entry('Section C1'),
       Entry(
-        'Section C2',
+        'Can I access this app without an internet connection?',
         <Entry>[
-          Entry('Item C2.0'),
-          Entry('Item C2.1'),
-          Entry('Item C2.2'),
-          Entry('Item C2.3'),
+          Entry('sample answer'),
+        ],
+      ),
+      Entry(
+        'How will  my final score be uploaded to the leaderboard?  Can I see how my understanding compares with others?',
+        <Entry>[
+          Entry('sample answer'),
+        ],
+      ),
+      Entry(
+        'How do I deregister myself from this app?',
+        <Entry>[
+          Entry('sample answer'),
         ],
       ),
     ],
@@ -78,12 +75,26 @@ class EntryItem extends StatelessWidget {
   final Entry entry;
 
   Widget _buildTiles(Entry root) {
-    if (root.children.isEmpty) return ListTile(title: Text(root.title));
-    return ExpansionTile(
-      key: PageStorageKey<Entry>(root),
-      title: Text(root.title),
-      children: root.children.map(_buildTiles).toList(),
-    );
+    if (root.children.isEmpty)
+      return Container(
+          padding: EdgeInsets.all(8.0),
+          child: ListTile(
+              title: Text(
+            root.title,
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          )));
+    return Container(
+        padding: EdgeInsets.all(8.0),
+        child: ExpansionTile(
+          key: PageStorageKey<Entry>(root),
+          title: Text(
+            root.title,
+            style: TextStyle(fontSize: 18),
+          ),
+          children: root.children.map(_buildTiles).toList(),
+        ));
   }
 
   @override

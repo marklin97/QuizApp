@@ -79,7 +79,32 @@ class DrawerBar extends StatelessWidget {
               // color: Colors.blue,
             ),
             title: Text(
-              "FAQS",
+              "USER MANUAL",
+              style: TextStyle(
+                fontSize: 18,
+                // color: Colors.blue,
+              ),
+            ),
+            onTap: () => Navigator.push(
+              context,
+              new MaterialPageRoute(
+                builder: (context) => FAQS(),
+              ),
+            ),
+          ),
+          new Divider(
+            height: 1,
+            color: Colors.grey,
+            thickness: 1,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.import_contacts,
+              size: 25,
+              // color: Colors.blue,
+            ),
+            title: Text(
+              "RESOURCES",
               style: TextStyle(
                 fontSize: 18,
                 // color: Colors.blue,
