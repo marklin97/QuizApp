@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import './setting.dart';
-import './faqs.dart';
+import 'package:QuizApp/screens/widgets/setting.dart';
+import 'package:QuizApp/screens/widgets/faqs.dart';
+import 'package:QuizApp/screens/widgets/manual.dart';
+import 'package:QuizApp/screens/widgets/resource.dart';
+import 'package:QuizApp/screens/widgets/contact.dart';
 
 class DrawerBar extends StatelessWidget {
   @override
@@ -11,15 +14,28 @@ class DrawerBar extends StatelessWidget {
       child: ListView(
         children: [
           Container(
-            height: height / 2.5,
-            child: DrawerHeader(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/darwerbar.jpeg"),
-                  fit: BoxFit.cover,
+            height: height / 3,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/starrySky.jpg'),
+                fit: BoxFit.fill,
+              ),
+            ),
+            padding: const EdgeInsets.all(50.0),
+            child: RawMaterialButton(
+              onPressed: () {},
+
+              // constraints: BoxConstraints(maxHeight: 50, maxWidth: 50),
+              child: CircleAvatar(
+                radius: 60,
+                backgroundColor: Colors.transparent,
+                backgroundImage: AssetImage('assets/police_icon2.png'),
+                child: Align(
+                  alignment: Alignment(0, 1.5),
+                  child: Text('Mark Lin'),
                 ),
               ),
-              child: null,
+              shape: CircleBorder(),
             ),
           ),
           Padding(
@@ -88,7 +104,7 @@ class DrawerBar extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               new MaterialPageRoute(
-                builder: (context) => FAQS(),
+                builder: (context) => Manual(),
               ),
             ),
           ),
@@ -113,7 +129,57 @@ class DrawerBar extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               new MaterialPageRoute(
+                builder: (context) => Resources(),
+              ),
+            ),
+          ),
+          new Divider(
+            height: 1,
+            color: Colors.grey,
+            thickness: 1,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.help,
+              size: 25,
+              // color: Colors.blue,
+            ),
+            title: Text(
+              "FAQS",
+              style: TextStyle(
+                fontSize: 18,
+                // color: Colors.blue,
+              ),
+            ),
+            onTap: () => Navigator.push(
+              context,
+              new MaterialPageRoute(
                 builder: (context) => FAQS(),
+              ),
+            ),
+          ),
+          new Divider(
+            height: 1,
+            color: Colors.grey,
+            thickness: 1,
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.phone,
+              size: 25,
+              // color: Colors.blue,
+            ),
+            title: Text(
+              "CONTACTS",
+              style: TextStyle(
+                fontSize: 18,
+                // color: Colors.blue,
+              ),
+            ),
+            onTap: () => Navigator.push(
+              context,
+              new MaterialPageRoute(
+                builder: (context) => Contacts(),
               ),
             ),
           ),

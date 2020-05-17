@@ -1,18 +1,44 @@
+import 'package:QuizApp/shared/constant.dart';
 import 'package:flutter/material.dart';
 
-class FAQS extends StatelessWidget {
+class Contacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Frequent Asked Questions',
+          'Contacts',
         ),
       ),
-      body: ListView.builder(
-        itemBuilder: (BuildContext context, int index) =>
-            EntryItem(data[index]),
-        itemCount: data.length,
+      body: Container(
+        padding: EdgeInsets.all(50),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Call Us : (02) 9850 7636",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(height: 30),
+            Text(
+              "Email : marklin97@hotmail.com",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+            SizedBox(height: 30),
+            Text(
+              "Hours : 8.30am - 5pm",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+            Text(
+              "            Monday to Friday",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+            SizedBox(height: 30),
+          ],
+        ),
       ),
     );
   }
@@ -29,7 +55,7 @@ class Entry {
 // The entire multilevel list displayed by this app.
 final List<Entry> data = <Entry>[
   Entry(
-    'FAQS',
+    'Police Search Manual',
     <Entry>[
       Entry(
         'How do I register myself for this app?',
@@ -37,23 +63,13 @@ final List<Entry> data = <Entry>[
           Entry('sample answer'),
         ],
       ),
+    ],
+  ),
+  Entry(
+    'NSW Legislation - Law Enforcement',
+    <Entry>[
       Entry(
-        'Can I access this app without an internet connection?',
-        <Entry>[
-          Entry('sample answer'),
-        ],
-      ),
-      Entry(
-        'How will  my final score be uploaded to the leaderboard?  Can I see how my understanding compares with others?',
-        <Entry>[
-          Entry('sample answer'),
-        ],
-      ),
-      Entry(
-        'How do I deregister myself from this app?',
-        <Entry>[
-          Entry('sample answer'),
-        ],
+        'How do I register myself for this app?',
       ),
     ],
   ),

@@ -28,7 +28,12 @@ class Home extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             onPressed: () async {
-              await _auth.signOut();
+              var user = await _auth.currentUser();
+              if (user != null) {
+                await _auth.signOut();
+              } else {
+                Navigator.pop(context);
+              }
             },
           ),
         ],
@@ -44,7 +49,7 @@ class Home extends StatelessWidget {
             new Module(
               moduleName: 'Sample Questions',
               totalQuiz: 4,
-              level: 'Level : Junior',
+              level: 'Level : Easy',
               icon: Icons.assessment,
             ),
             SizedBox(height: 20),
@@ -58,14 +63,14 @@ class Home extends StatelessWidget {
             new Module(
               moduleName: 'Criminal Code Act 1995',
               totalQuiz: 50,
-              level: 'Level : Senior',
+              level: 'Level : Hard',
               icon: Icons.assignment,
             ),
             SizedBox(height: 20),
             new Module(
-              moduleName: 'Criminal Code Act 1995',
+              moduleName: 'Law Enforcement Act',
               totalQuiz: 50,
-              level: 'Level : Senior',
+              level: 'Level : Hard',
               icon: Icons.assignment,
             ),
           ],

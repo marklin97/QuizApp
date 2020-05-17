@@ -9,7 +9,10 @@ ThemeData light = ThemeData(
   buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.accent),
   textTheme: TextTheme(
     title: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),
-    body2: TextStyle(color: Colors.blue),
+    body2: TextStyle(
+      color: Colors.blue,
+      fontSize: 20.0,
+    ),
   ),
 );
 
@@ -49,15 +52,21 @@ ThemeData green = ThemeData(
 );
 
 class ThemeNotifier extends ChangeNotifier {
-  final String key = "theme";
+  final String theme = "theme";
   final String temp = 'color';
+
+  final String font = "font";
+  final String temp_1 = 'size';
+
   SharedPreferences _prefs;
   String _colorTheme;
+  String _fontSize;
 
   String get colorTheme => _colorTheme;
-
+  String get fontSize => _fontSize;
   ThemeNotifier() {
     _colorTheme = 'red';
+    _fontSize = '16';
     _loadFromPrefs();
   }
 
@@ -66,10 +75,18 @@ class ThemeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  saveColor(key, colorTheme) async {
+  saveColor(theme, colorTheme) async {
     await _initPrefs();
     _prefs.setString(temp, colorTheme);
     _colorTheme = _prefs.getString(temp);
+    notifyListeners();
+  }
+
+  saveFontSize(font, fontSize) async {
+    await _initPrefs();
+    _prefs.setString(temp_1, fontSize);
+    _fontSize = _prefs.getString(temp_1);
+    print(_fontSize);
     notifyListeners();
   }
 
@@ -79,8 +96,8 @@ class ThemeNotifier extends ChangeNotifier {
 
   _loadFromPrefs() async {
     await _initPrefs();
-
     _colorTheme = _prefs.getString(temp);
+    _fontSize = _prefs.getString(temp_1);
     notifyListeners();
   }
 

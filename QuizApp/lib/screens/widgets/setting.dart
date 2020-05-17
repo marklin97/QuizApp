@@ -17,7 +17,7 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  String dropdownValue = '12';
+  String dropdownValue = '16';
   String letterSpacing = '0.5';
 
   Widget build(BuildContext context) {
@@ -102,47 +102,50 @@ class _SettingState extends State<Setting> {
               color: Colors.grey,
               thickness: 0.5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "\n    Font Size    \n",
-                        style: TextStyle(fontSize: 16),
+            Consumer<ThemeNotifier>(
+              builder: (context, notifier, child) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "\n    Font Size    \n",
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
-                    ),
-                    new DropdownButton<String>(
-                      value: dropdownValue,
-                      icon: Icon(Icons.arrow_downward),
-                      iconSize: 24,
-                      elevation: 16,
-                      style: TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
+                      new DropdownButton<String>(
+                        value: dropdownValue,
+                        icon: Icon(Icons.arrow_downward),
+                        iconSize: 24,
+                        elevation: 16,
+                        style: TextStyle(color: Colors.deepPurple),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (String newValue) {
+                          setState(() {
+                            dropdownValue = newValue;
+                            notifier.saveFontSize('font', '$dropdownValue');
+                          });
+                        },
+                        items: <String>['16', '18', '20', '22']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          );
+                        }).toList(),
                       ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                        });
-                      },
-                      items: <String>['12', '14', '16', '18', '20']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
             new Divider(
               height: 20,

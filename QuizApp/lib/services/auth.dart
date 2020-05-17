@@ -27,6 +27,17 @@ class AuthService {
     }
   }
 
+  // get user details
+  Future currentUser() async {
+    try {
+      FirebaseUser user = await _auth.currentUser();
+      return user;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   // sign in with email and password
 
   Future signInWithEmailAndPassword(String email, String password) async {

@@ -57,7 +57,7 @@ final options = [
         'this may lead to escalation. Would be hard to diffuse the situation if you undertook this option'),
     OptionValue(
         "2. Tell the suspect you are legally obligated to film all strip searches as it is a form of evidence to prove guilt or innocence",
-        false,
+        true,
         'The NSW Court of Criminal Appeal '),
     OptionValue("3. Release him since he’s being troublesome", false,
         'Defensiveness is suspicious. How do we know he didn’t have drugs?'),
