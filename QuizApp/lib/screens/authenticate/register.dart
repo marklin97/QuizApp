@@ -12,18 +12,18 @@ class Register extends StatefulWidget {
   _RegisterState createState() => _RegisterState();
 }
 
-// constructor
-
-final AuthService _auth = AuthService();
-final _formKey = GlobalKey<FormState>();
-
-String error = '';
-bool loading = false;
-// text field state
-String email = '';
-String password = '';
-
 class _RegisterState extends State<Register> {
+  // constructor
+
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+
+  String error = '';
+  bool loading = false;
+// text field state
+  String email = '';
+  String password = '';
+  String username = '';
   @override
   Widget build(BuildContext context) {
     //double width = MediaQuery.of(context).size.width;
@@ -64,6 +64,7 @@ class _RegisterState extends State<Register> {
                 SizedBox(height: 50),
                 SizedBox(height: 20),
                 TextFormField(
+                    key: ValueKey('email'),
                     decoration: textInputDecoration.copyWith(hintText: 'Email'),
                     validator: validateEmail,
                     onChanged: (val) {
@@ -71,6 +72,18 @@ class _RegisterState extends State<Register> {
                     }),
                 SizedBox(height: 20),
                 TextFormField(
+                    key: ValueKey('username'),
+                    decoration:
+                        textInputDecoration.copyWith(hintText: 'Username'),
+                    validator: (val) => val.length < 4
+                        ? 'Enter a username with minimum length of 4'
+                        : null,
+                    onChanged: (val) {
+                      setState(() => username = val);
+                    }),
+                SizedBox(height: 20),
+                TextFormField(
+                  key: ValueKey('password'),
                   decoration:
                       textInputDecoration.copyWith(hintText: 'Password'),
                   obscureText: true,
@@ -89,15 +102,16 @@ class _RegisterState extends State<Register> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
+                    print('*********************');
                     if (_formKey.currentState.validate()) {
                       setState(() => loading = true);
                       dynamic result = await _auth.registerWithEmailAndPassword(
-                          email, password);
+                          email, password, username);
 
                       if (result == null) {
                         setState(() {
-                          error = 'User aldready exist';
                           loading = false;
+                          error = 'Please supply a valid email';
                         });
                       }
                     }
@@ -106,10 +120,7 @@ class _RegisterState extends State<Register> {
                 SizedBox(height: 12.0),
                 Text(
                   error,
-                  style: TextStyle(
-                      color: Colors.red[400],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
+                  style: TextStyle(color: Colors.red[400], fontSize: 18),
                 )
               ],
             )),

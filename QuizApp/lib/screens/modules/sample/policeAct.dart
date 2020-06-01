@@ -4,6 +4,9 @@ import 'package:QuizApp/screens/modules/sample/questions.dart';
 import 'package:provider/provider.dart';
 import 'package:QuizApp/screens/widgets/theme.dart';
 import 'dart:async';
+import 'package:QuizApp/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:QuizApp/services/database.dart';
 
 class PoliceAct extends StatefulWidget {
   final int selectedNumber;
@@ -23,7 +26,7 @@ var _color = color;
 var _icon = icon;
 var _checkBox = checkBox;
 var _hint = hint;
-
+var currentScore;
 // temp variable use to store the questions
 var tempArray = questions;
 var _buttonOptions = options;
@@ -35,6 +38,8 @@ dynamic timerIcon = Text("$_start");
 //Icon(Icons.arrow_forward_ios);
 
 class _PoliceActState extends State<PoliceAct> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     tempArray = questions.take(widget.selectedNumber).toList();
@@ -292,12 +297,25 @@ class _PoliceActState extends State<PoliceAct> {
   @override
   void initState() {
     startTimer();
+    getDbScore();
+
     super.initState();
   }
 
-  void updateQuestion() {
-    _start = 30;
+  dynamic getDbScore() async {
+    final FirebaseUser user = await _auth.currentUser();
+    currentScore = await DatabaseService(uid: user.uid).getUserScore();
+    return currentScore;
+  }
 
+  void updateQuestion() async {
+    _start = 30;
+    // update user score if reaches end of questions && user achieve new high score.
+    if (questionNumber == tempArray.length - 1 &&
+        finalScore.toInt() > currentScore) {
+      final FirebaseUser user = await _auth.currentUser();
+      await DatabaseService(uid: user.uid).updateUserScore(finalScore.toInt());
+    }
     setState(() {
       timerColor = Colors.green;
       temp = finalScore;

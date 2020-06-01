@@ -1,3 +1,4 @@
+import 'package:QuizApp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user.dart';
 
@@ -55,11 +56,13 @@ class AuthService {
   }
 
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(
+      String email, String password, String userName) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
+      await DatabaseService(uid: user.uid).updateUserData(userName, 0);
       // create a new document for user with the uid
 
       return _userFromFirebaseUser(user);
