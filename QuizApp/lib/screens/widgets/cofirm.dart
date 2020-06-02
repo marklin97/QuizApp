@@ -1,4 +1,4 @@
-import 'package:QuizApp/screens/modules/sample/policeAct.dart';
+import 'package:QuizApp/screens/modules/sample/sampleQuestions.dart';
 import 'package:flutter/material.dart';
 
 enum ConfirmAction { CANCEL, ACCEPT }
@@ -69,7 +69,7 @@ class _ConfirmState extends State<Confirm> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            PoliceAct(selectedNumber: _value)),
+                            SampleQuestions(selectedNumber: _value)),
                   );
                 },
               ),

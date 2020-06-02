@@ -1,10 +1,10 @@
-import 'package:QuizApp/screens/home/leaderBoard.dart';
+import 'package:QuizApp/screens/leaderBoard/leaderBoard.dart';
 import 'package:flutter/material.dart';
-import 'package:QuizApp/screens/widgets/setting.dart';
-import 'package:QuizApp/screens/widgets/faqs.dart';
-import 'package:QuizApp/screens/widgets/manual.dart';
-import 'package:QuizApp/screens/widgets/resource.dart';
-import 'package:QuizApp/screens/widgets/contact.dart';
+import 'package:QuizApp/screens/theme/setting.dart';
+import 'package:QuizApp/screens/home/faqs.dart';
+import 'package:QuizApp/screens/home/manual.dart';
+import 'package:QuizApp/screens/home/resource.dart';
+import 'package:QuizApp/screens/home/contact.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:QuizApp/services/database.dart';
 import 'package:QuizApp/services/auth.dart';

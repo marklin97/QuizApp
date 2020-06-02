@@ -1,4 +1,4 @@
-import 'package:QuizApp/screens/widgets/user_list.dart';
+import 'package:QuizApp/screens/leaderBoard/user_list.dart';
 import 'package:flutter/material.dart';
 import 'package:QuizApp/services/database.dart';
 import 'package:provider/provider.dart';

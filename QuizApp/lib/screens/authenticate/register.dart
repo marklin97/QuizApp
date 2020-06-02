@@ -30,6 +30,7 @@ class _RegisterState extends State<Register> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.0,
@@ -62,7 +63,6 @@ class _RegisterState extends State<Register> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 50),
-                SizedBox(height: 20),
                 TextFormField(
                     key: ValueKey('email'),
                     decoration: textInputDecoration.copyWith(hintText: 'Email'),

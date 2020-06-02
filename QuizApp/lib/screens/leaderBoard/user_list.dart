@@ -1,4 +1,4 @@
-import 'package:QuizApp/screens/widgets/user_tile.dart';
+import 'package:QuizApp/screens/leaderBoard/user_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:QuizApp/models/score.dart';
 import 'package:provider/provider.dart';

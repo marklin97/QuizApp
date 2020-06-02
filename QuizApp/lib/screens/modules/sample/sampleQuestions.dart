@@ -1,26 +1,27 @@
-import 'package:QuizApp/screens/home/summary.dart';
+import 'package:QuizApp/screens/home/home.dart';
+import 'package:QuizApp/screens/modules/summary.dart';
 import 'package:flutter/material.dart';
 import 'package:QuizApp/screens/modules/sample/questions.dart';
 import 'package:provider/provider.dart';
-import 'package:QuizApp/screens/widgets/theme.dart';
-import 'dart:async';
+import 'package:QuizApp/screens/theme/theme.dart';
 import 'package:QuizApp/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:QuizApp/services/database.dart';
+import 'dart:async';
 
-class PoliceAct extends StatefulWidget {
+class SampleQuestions extends StatefulWidget {
   final int selectedNumber;
   @override
-  _PoliceActState createState() => _PoliceActState();
+  _SampleQuestionsState createState() => _SampleQuestionsState();
 
-  PoliceAct({this.selectedNumber});
+  SampleQuestions({this.selectedNumber});
 }
 
 // temporary vairable for storing user
 double finalScore = 0;
 double temp = 0;
 bool selected = false;
-Timer _timer;
+
 var questionNumber = 0;
 var _color = color;
 var _icon = icon;
@@ -32,12 +33,12 @@ var tempArray = questions;
 var _buttonOptions = options;
 
 // temp varaibles use to store timer state
-int _start = 30;
+int _counter = 30;
 Color timerColor = Colors.green;
-dynamic timerIcon = Text("$_start");
+dynamic timerIcon = Text("$_counter");
 //Icon(Icons.arrow_forward_ios);
 
-class _PoliceActState extends State<PoliceAct> {
+class _SampleQuestionsState extends State<SampleQuestions> {
   final AuthService _auth = AuthService();
 
   @override
@@ -236,20 +237,20 @@ class _PoliceActState extends State<PoliceAct> {
 
   void startTimer() async {
     const oneSec = Duration(seconds: 1);
-    _timer = new Timer.periodic(oneSec, (Timer timer) {
+    new Timer.periodic(oneSec, (Timer timer) {
       setState(() {
-        if (_start < 12) {
+        if (_counter < 12) {
           timerColor = Colors.red;
         }
-        if (_start < 1) {
+        if (_counter < 1) {
           timer.cancel();
           updateQuestion();
         } else if (selected == true) {
           timer.cancel();
           timerIcon = Icon(Icons.arrow_forward_ios);
         } else {
-          _start = _start - 1;
-          timerIcon = Text("$_start");
+          _counter = _counter - 1;
+          timerIcon = Text("$_counter");
         }
       });
     });
@@ -286,10 +287,10 @@ class _PoliceActState extends State<PoliceAct> {
   void resetQuiz() {
     setState(() {
       Navigator.pop(context);
-      _start = 30;
+      _counter = 30;
       finalScore = 0;
       questionNumber = 0;
-      selected = !selected;
+      selected = false;
       clearState();
     });
   }
@@ -309,25 +310,29 @@ class _PoliceActState extends State<PoliceAct> {
   }
 
   void updateQuestion() async {
-    _start = 30;
+    _counter = 30;
     // update user score if reaches end of questions && user achieve new high score.
     if (questionNumber == tempArray.length - 1 &&
         finalScore.toInt() > currentScore) {
       final FirebaseUser user = await _auth.currentUser();
-      await DatabaseService(uid: user.uid).updateUserScore(finalScore.toInt());
+      await DatabaseService(uid: user.uid)
+          .updateUserScore(finalScore.toInt(), DateTime.now());
     }
     setState(() {
       timerColor = Colors.green;
       temp = finalScore;
 
       if (questionNumber == tempArray.length - 1) {
+        resetQuiz();
         Navigator.push(
-            context,
-            new MaterialPageRoute(
-                builder: (context) => new Summary(
-                      score: temp,
-                      questionNumber: questionNumber,
-                    )));
+          context,
+          new MaterialPageRoute(
+            builder: (context) => new Summary(
+              score: temp,
+              questionNumber: questionNumber,
+            ),
+          ),
+        );
         questionNumber = 0;
         finalScore = 0;
 

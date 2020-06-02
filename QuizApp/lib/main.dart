@@ -2,8 +2,8 @@ import 'package:QuizApp/services/auth.dart';
 import 'package:flutter/material.dart';
 import './screens/wrapper.dart';
 import 'package:provider/provider.dart';
-import './models/user.dart';
-import './screens/widgets/theme.dart';
+import 'package:QuizApp/models/user.dart';
+import 'package:QuizApp/screens/theme/theme.dart';
 
 ThemeData setTheme(String theme) {
   if (theme == 'blue') {

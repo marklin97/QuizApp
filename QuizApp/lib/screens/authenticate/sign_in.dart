@@ -1,4 +1,3 @@
-import 'package:QuizApp/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import '../../services/auth.dart';
 import '../../shared/constant.dart';
@@ -23,10 +22,11 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    //double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.0,
@@ -73,56 +73,31 @@ class _SignInState extends State<SignIn> {
                         decoration:
                             textInputDecoration.copyWith(hintText: 'password'),
                         obscureText: true,
-                        validator: (val) => val.length < 6
-                            ? 'Enter a password with minimum length of 6'
+                        validator: (val) => val.length < 8
+                            ? 'Enter a password with minimum length of 8'
                             : null,
                         onChanged: (val) {
                           setState(() => password = val);
                         },
                       ),
                       SizedBox(height: height / 50),
-                      Row(children: <Widget>[
-                        SizedBox(width: 30),
-                        RaisedButton(
-                          color: Colors.blue[600],
-                          child: Text(
-                            'Sign in as guest',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () async {
-                            /*
-                        dynamic result = _auth.signInAnon();
-                        if (result == null) {
-                          print('error in sign in');
-                        } else {
-                          print('signed in');
-                        }
-                        */
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Home()),
-                            );
-                          },
+                      RaisedButton(
+                        color: Colors.pink[600],
+                        child: Text(
+                          'Sign in',
+                          style: TextStyle(color: Colors.white),
                         ),
-                        SizedBox(width: width / 15),
-                        RaisedButton(
-                          color: Colors.pink[600],
-                          child: Text(
-                            'Sign in',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              dynamic result = await _auth
-                                  .signInWithEmailAndPassword(email, password);
-                              if (result == null) {
-                                setState(() => error =
-                                    'Could not sign in with those credentials');
-                              }
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            dynamic result = await _auth
+                                .signInWithEmailAndPassword(email, password);
+                            if (result == null) {
+                              setState(() => error =
+                                  'Could not sign in with those credentials');
                             }
-                          },
-                        ),
-                      ]),
+                          }
+                        },
+                      ),
                       SizedBox(height: 12.0),
                       Text(
                         error,

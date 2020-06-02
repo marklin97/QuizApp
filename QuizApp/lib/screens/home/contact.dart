@@ -1,4 +1,3 @@
-import 'package:QuizApp/shared/constant.dart';
 import 'package:flutter/material.dart';
 
 class Contacts extends StatelessWidget {

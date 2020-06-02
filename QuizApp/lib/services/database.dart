@@ -8,10 +8,11 @@ class DatabaseService {
   final CollectionReference userScores =
       Firestore.instance.collection('userScore');
 
-  Future updateUserData(String userName, int score) async {
+  Future updateUserData(String userName, int score, DateTime time) async {
     return await userScores.document(uid).setData({
       'userName': userName,
       'score': score,
+      'timeAchieved': time,
     });
   }
 
@@ -31,9 +32,10 @@ class DatabaseService {
     return userName;
   }
 
-  Future updateUserScore(int score) async {
+  Future updateUserScore(int score, DateTime time) async {
     return await userScores.document(uid).updateData({
       'score': score,
+      'timeAchieved': time,
     });
   }
 
@@ -51,6 +53,7 @@ class DatabaseService {
   Stream<List<Score>> get userScore {
     return userScores
         .orderBy('score', descending: true)
+        .orderBy('timeAchieved', descending: false)
         .snapshots()
         .map(_userListFromSnapShot);
   }

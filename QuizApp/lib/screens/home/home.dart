@@ -1,7 +1,7 @@
 import 'package:QuizApp/screens/widgets/module.dart';
 import 'package:QuizApp/services/auth.dart';
 import 'package:flutter/material.dart';
-import '../widgets/drawer.dart';
+import './drawer.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui';
 

@@ -34,7 +34,7 @@ class Summary extends StatelessWidget {
                 questionNumber = 0;
                 score = 0;
                 Navigator.popUntil(context, (route) {
-                  return count++ == 2;
+                  return count++ == 1;
                 });
               },
               child: new Text(

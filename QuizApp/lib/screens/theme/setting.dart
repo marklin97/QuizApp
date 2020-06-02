@@ -1,7 +1,7 @@
 //import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../widgets/theme.dart';
+import 'package:QuizApp/screens/theme/theme.dart';
 
 //import 'package:QuizApp/screens/widgets/theme.dart';
 
